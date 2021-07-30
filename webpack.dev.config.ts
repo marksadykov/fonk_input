@@ -35,19 +35,6 @@ const config: Configuration = {
           },
         },
       },
-      // {
-      //     test: /\.css$/,
-      //     use: [
-      //         { loader: "style-loader" },
-      //         { loader: "typings-for-css-modules-loader", options: { modules: true, namedExport: true, camelCase: true, localIdentName: "[name]_[local]_[hash:base64]" }},
-      //         {
-      //             loader: "css-loader",
-      //             options: {
-      //                 namedExport: true
-      //             }
-      //         },
-      //     ]
-      // },
       {
         test: /\.scss$/,
         use: [

@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import TestDiv from './uicomponents/TestDiv';
 
 const App = () => (
-    <h1>Тестовый компонент</h1>
+    <div><h1>Тестовый компонент</h1><TestDiv /></div>
 );
 
 ReactDOM.render(

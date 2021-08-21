@@ -1,5 +1,5 @@
-import React from "react"
+import React from 'react';
 
-const TestDiv = (): React.ReactElement => <div>TestDiv</div>
+const TestDiv = (): React.ReactElement => <div>TestDiv</div>;
 
-export default TestDiv
+export default TestDiv;

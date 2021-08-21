@@ -1,36 +1,36 @@
-import path from "path"
-import HtmlWebpackPlugin from "html-webpack-plugin"
-import * as webpack from "webpack"
-import * as webpackDevServer from "webpack-dev-server"
-import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
-import ESLintPlugin from "eslint-webpack-plugin"
-import MiniCssExtractPlugin from "mini-css-extract-plugin"
-import autoprefixer from "autoprefixer"
+import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import * as webpack from 'webpack';
+import * as webpackDevServer from 'webpack-dev-server';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import ESLintPlugin from 'eslint-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import autoprefixer from 'autoprefixer';
 
-const isDevelopment = process.env.NODE_ENV !== "production"
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 type Configuration = webpack.Configuration & {
-  devServer?: webpackDevServer.Configuration
-}
+  devServer?: webpackDevServer.Configuration;
+};
 
 const config: Configuration = {
-  mode: "development",
+  mode: 'development',
   output: {
-    publicPath: "/",
+    publicPath: '/',
   },
-  entry: "./src/index.tsx",
+  entry: './src/index.tsx',
   module: {
     rules: [
       {
         test: /\.(ts|js)x?$/i,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
             presets: [
-              "@babel/preset-env",
-              "@babel/preset-react",
-              "@babel/preset-typescript",
+              '@babel/preset-env',
+              '@babel/preset-react',
+              '@babel/preset-typescript',
             ],
           },
         },
@@ -39,28 +39,28 @@ const config: Configuration = {
         test: /\.scss$/,
         use: [
           {
-            loader: "style-loader",
+            loader: 'style-loader',
           },
           {
-            loader: "typings-for-css-modules-loader",
+            loader: 'typings-for-css-modules-loader',
             options: {
               modules: true,
               namedExport: true,
               camelCase: true,
-              localIdentName: "[name]_[local]_[hash:base64]",
+              localIdentName: '[name]_[local]_[hash:base64]',
             },
           },
           {
-            loader: "postcss-loader",
+            loader: 'postcss-loader',
             options: {
               plugins: () => [autoprefixer()],
             },
           },
           {
-            loader: "sass-loader",
+            loader: 'sass-loader',
           },
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               namedExport: true,
             },
@@ -70,12 +70,12 @@ const config: Configuration = {
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js", ".scss"],
+    extensions: ['.tsx', '.ts', '.js', '.scss'],
   },
   optimization: {
-    runtimeChunk: "single",
+    runtimeChunk: 'single',
     splitChunks: {
-      chunks: "all",
+      chunks: 'all',
       maxInitialRequests: Infinity,
       minSize: 0,
       cacheGroups: {
@@ -84,48 +84,48 @@ const config: Configuration = {
           name(module: any) {
             const packageName = module.context.match(
               /[\\/]node_modules[\\/](.*?)([\\/]|$)/
-            )[1]
-            return `npm.${packageName.replace("@", "")}`
+            )[1];
+            return `npm.${packageName.replace('@', '')}`;
           },
         },
       },
     },
     minimize: true,
     minimizer: [
-      (compiler) => {
-        const TerserPlugin = require("terser-webpack-plugin")
+      compiler => {
+        const TerserPlugin = require('terser-webpack-plugin');
         new TerserPlugin({
           terserOptions: {
             compress: {},
           },
-        }).apply(compiler)
+        }).apply(compiler);
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "src/index.html",
+      template: 'src/index.html',
     }),
     new webpack.HotModuleReplacementPlugin(),
     new ForkTsCheckerWebpackPlugin({
       async: false,
     }),
     new ESLintPlugin({
-      extensions: ["js", "jsx", "ts", "tsx"],
+      extensions: ['js', 'jsx', 'ts', 'tsx'],
     }),
     new MiniCssExtractPlugin({
-      filename: isDevelopment ? "[name].css" : "[name].[hash].css",
-      chunkFilename: isDevelopment ? "[id].css" : "[id].[hash].css",
+      filename: isDevelopment ? '[name].css' : '[name].[hash].css',
+      chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css',
     }),
   ],
-  devtool: "inline-source-map",
+  devtool: 'inline-source-map',
   devServer: {
-    contentBase: path.join(__dirname, "build"),
+    contentBase: path.join(__dirname, 'build'),
     historyApiFallback: true,
     port: 8000,
     open: true,
     hot: true,
   },
-}
+};
 
-export default config
+export default config;

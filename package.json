@@ -23,9 +23,10 @@
     "test": "jest",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
-    "format": "prettier --write \"**/*.+(ts|tsx|json|css|scss|md)\""
+    "lint": "eslint src/",
+    "lint:fix": "eslint --fix src/",
+    "format": "prettier --write \"**/*.+(ts|tsx|json|css|scss|md)\"",
+    "precommit": "lint:fix"
   },
   "dependencies": {
     "react": "^17.0.2",

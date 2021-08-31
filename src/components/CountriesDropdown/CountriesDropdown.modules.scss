@@ -1,0 +1,10 @@
+.country-dropdown {
+  outline: none;
+  border: none;
+  border-bottom: 2px solid black;
+
+  &:focus {
+    color: dodgerblue;
+    border-bottom: 2px solid dodgerblue;
+  }
+}

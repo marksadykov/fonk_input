@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TestDiv from './uicomponents/TestDiv';
+import TestDiv from './components/TestDiv';
+import PhoneInput from './components/PhoneInput';
 
 const App = () => (
-  <div>
+  <>
     <h1>Тестовый компонент</h1>
-    <TestDiv />
-  </div>
+    <PhoneInput onChange={console.log} />
+  </>
 );
 
 ReactDOM.render(

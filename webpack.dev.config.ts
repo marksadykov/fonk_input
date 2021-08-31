@@ -5,13 +5,41 @@ import * as webpackDevServer from 'webpack-dev-server';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import autoprefixer from 'autoprefixer';
+const autoprefixer = require('autoprefixer');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 type Configuration = webpack.Configuration & {
   devServer?: webpackDevServer.Configuration;
 };
+
+const cssRule = (modules: boolean = false) => [
+  { loader: isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader },
+  {
+    loader: 'css-loader',
+    options: {
+      sourceMap: true,
+      modules: modules
+        ? {
+            localIdentName: '[name]__[local]__[hash:base64:5]',
+          }
+        : undefined,
+    },
+  },
+  {
+    loader: 'postcss-loader',
+    options: {
+      postcssOptions: {
+        plugins: [
+          ['postcss-preset-env', 'postcss-nested', () => [autoprefixer()]],
+        ],
+      },
+    },
+  },
+  {
+    loader: 'sass-loader',
+  },
+];
 
 const config: Configuration = {
   mode: 'development',
@@ -36,36 +64,29 @@ const config: Configuration = {
         },
       },
       {
-        test: /\.scss$/,
+        test: /\.css$/,
         use: [
           {
-            loader: 'style-loader',
-          },
-          {
-            loader: 'typings-for-css-modules-loader',
-            options: {
-              modules: true,
-              namedExport: true,
-              camelCase: true,
-              localIdentName: '[name]_[local]_[hash:base64]',
-            },
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: () => [autoprefixer()],
-            },
-          },
-          {
-            loader: 'sass-loader',
+            loader: isDevelopment
+              ? 'style-loader'
+              : MiniCssExtractPlugin.loader,
           },
           {
             loader: 'css-loader',
             options: {
-              namedExport: true,
+              sourceMap: false,
             },
           },
         ],
+      },
+      {
+        test: /.(scss|sass)$/,
+        exclude: /\.modules\.(scss|sass)$/,
+        use: cssRule(),
+      },
+      {
+        test: /\.modules\.(s?css|sass)$/,
+        use: cssRule(true),
       },
     ],
   },
@@ -114,8 +135,7 @@ const config: Configuration = {
       extensions: ['js', 'jsx', 'ts', 'tsx'],
     }),
     new MiniCssExtractPlugin({
-      filename: isDevelopment ? '[name].css' : '[name].[hash].css',
-      chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css',
+      filename: 'css/[name].[contenthash:6].css',
     }),
   ],
   devtool: 'inline-source-map',

@@ -1,0 +1,11 @@
+.digit-input {
+  width: 1ch;
+  font: 5ch droid sans mono, consolas, monospace;
+  border-bottom: 2px solid black;
+
+  &:focus {
+    outline: none;
+    color: dodgerblue;
+    border-bottom: 2px solid dodgerblue;
+  }
+}

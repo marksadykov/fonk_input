@@ -3,7 +3,7 @@ import './Bracket.modules.scss';
 
 export enum Side {
   left = 'left',
-  right = 'right'
+  right = 'right',
 }
 
 type BracketProps = {
@@ -12,7 +12,7 @@ type BracketProps = {
 
 const Bracket: React.FC<BracketProps> = ({ side }: BracketProps) => {
   return (
-    <span className="bracket">
+    <span styleName="bracket">
       {side == Side.left && '('}
       {side == Side.right && ')'}
     </span>

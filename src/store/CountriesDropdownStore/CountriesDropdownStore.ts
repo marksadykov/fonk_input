@@ -18,7 +18,9 @@ export default class CountriesDropdownStore {
     return this._items;
   }
 
-  setCurrentItem(value: string) {
+  setCurrentItem = (value: string) => {
+    console.log('this._currentItem', this);
+    console.log('value_setCurrentItem', value);
     this._currentItem = value;
-  }
+  };
 }

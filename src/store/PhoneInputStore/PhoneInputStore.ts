@@ -82,11 +82,11 @@ export default class PhoneInputStore {
       items
     );
 
-    makeObservable<PhoneInputStore, PrivateFields>(this, {
-      _phoneParams: observable,
-      _prefix: observable,
-      _value: observable,
-    });
+    // makeObservable<PhoneInputStore, PrivateFields>(this, {
+    //   _phoneParams: observable,
+    //   _prefix: observable,
+    //   _value: observable,
+    // });
   }
 
   // get value(): string[] {
@@ -97,5 +97,7 @@ export default class PhoneInputStore {
     return this._countriesDropdownStore;
   }
 
-  destroy(): void {}
+  get currentPrefix(): string {
+    return this._countriesDropdownStore.currentItem;
+  }
 }

@@ -8,14 +8,14 @@ type DigitInputProps = {
 
 const DigitInput: React.FC<DigitInputProps> = ({
   value,
-  disable = false
+  disable = false,
 }: DigitInputProps) => {
   return (
     <input
       maxLength={1}
       disabled={disable}
       value={value}
-      className="digit-input"
+      styleName="digit-input"
     />
   );
 };

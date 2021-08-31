@@ -28,6 +28,7 @@ const PhoneInput = ({ onChange }: PhoneInputProps) => {
   return (
     <CountriesDropdown
       countries={phoneInputStore.countriesDropdownStore.items}
+      onChange={phoneInputStore.countriesDropdownStore.setCurrentItem}
     />
   );
 };

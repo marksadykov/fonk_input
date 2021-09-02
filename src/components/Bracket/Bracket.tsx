@@ -1,20 +1,22 @@
 import * as React from 'react';
 import './Bracket.modules.scss';
 
-export enum Side {
+export enum BracketType {
   left = 'left',
   right = 'right',
+  dash = 'dash',
 }
 
-type BracketProps = {
-  side: Side;
+export type BracketProps = {
+  type?: BracketType;
 };
 
-const Bracket: React.FC<BracketProps> = ({ side }: BracketProps) => {
+const Bracket: React.FC<BracketProps> = ({ type }: BracketProps) => {
   return (
     <span styleName="bracket">
-      {side == Side.left && '('}
-      {side == Side.right && ')'}
+      {type == BracketType.left && '('}
+      {type == BracketType.right && ')'}
+      {type == BracketType.dash && '-'}
     </span>
   );
 };

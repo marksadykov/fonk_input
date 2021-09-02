@@ -1,5 +1,7 @@
+@import '../../styles/mixins';
+
 .bracket {
-  width: 1ch;
-  font: 5ch droid sans mono, consolas, monospace;
-  color: black;
+  @include inputSize;
+
+  color: $base-color;
 }

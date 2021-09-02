@@ -6,6 +6,7 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 const autoprefixer = require('autoprefixer');
+import { webpackVariables, PORT } from './webpack.variables';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -13,7 +14,7 @@ type Configuration = webpack.Configuration & {
   devServer?: webpackDevServer.Configuration;
 };
 
-const cssRule = (modules: boolean = false) => [
+const styles = (modules: boolean = false) => [
   { loader: isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader },
   {
     loader: 'css-loader',
@@ -21,7 +22,7 @@ const cssRule = (modules: boolean = false) => [
       sourceMap: true,
       modules: modules
         ? {
-            localIdentName: '[name]__[local]__[hash:base64:5]',
+            localIdentName: webpackVariables.classNames,
           }
         : undefined,
     },
@@ -82,11 +83,11 @@ const config: Configuration = {
       {
         test: /.(scss|sass)$/,
         exclude: /\.modules\.(scss|sass)$/,
-        use: cssRule(),
+        use: styles(),
       },
       {
         test: /\.modules\.(s?css|sass)$/,
-        use: cssRule(true),
+        use: styles(true),
       },
     ],
   },
@@ -135,14 +136,14 @@ const config: Configuration = {
       extensions: ['js', 'jsx', 'ts', 'tsx'],
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[contenthash:6].css',
+      filename: webpackVariables.filename,
     }),
   ],
   devtool: 'inline-source-map',
   devServer: {
     contentBase: path.join(__dirname, 'build'),
     historyApiFallback: true,
-    port: 8000,
+    port: PORT,
     open: true,
     hot: true,
   },

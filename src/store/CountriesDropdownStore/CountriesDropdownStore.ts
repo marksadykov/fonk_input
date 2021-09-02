@@ -1,16 +1,24 @@
-import { makeObservable, observable } from 'mobx';
+import { computed, makeObservable, observable } from 'mobx';
+import { ILocalStore } from '../useLocal';
 
-export default class CountriesDropdownStore {
-  private _currentItem: string;
+type PrivateFields = '_currentItem' | '_items';
+
+export default class CountriesDropdownStore implements ILocalStore {
+  private _currentItem: string | null;
   private _items: string[] | null;
 
   constructor(currentItem: string | null, items: string[]) {
     this._currentItem = currentItem || items[0];
     this._items = items;
-    makeObservable<CountriesDropdownStore>(this, {});
+    makeObservable<CountriesDropdownStore, PrivateFields>(this, {
+      _currentItem: observable,
+      _items: observable,
+      currentItem: computed,
+      items: computed,
+    });
   }
 
-  get currentItem(): string {
+  get currentItem(): string | null {
     return this._currentItem;
   }
 
@@ -18,9 +26,12 @@ export default class CountriesDropdownStore {
     return this._items;
   }
 
-  setCurrentItem = (value: string) => {
-    console.log('this._currentItem', this);
-    console.log('value_setCurrentItem', value);
+  setCurrentItem = (value: string): void => {
     this._currentItem = value;
   };
+
+  destroy(): void {
+    this._currentItem = null;
+    this._items = null;
+  }
 }

@@ -1,11 +1,12 @@
-.digit-input {
-  width: 1ch;
-  font: 5ch droid sans mono, consolas, monospace;
-  border-bottom: 2px solid black;
+@import '../../styles/mixins';
 
+.digit-input {
+  font: $font;
+  @include resetBorder;
+  border-bottom: $border-bottom;
+  
   &:focus {
-    outline: none;
-    color: dodgerblue;
-    border-bottom: 2px solid dodgerblue;
+    @include resetOutline;
+    @include borderActive;
   }
 }

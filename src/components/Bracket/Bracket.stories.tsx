@@ -1,7 +1,6 @@
 import { withKnobs } from '@storybook/addon-knobs';
 import * as React from 'react';
-import Bracket from './Bracket';
-import { Side } from './Bracket';
+import Bracket, { BracketType } from './Bracket';
 
 export default {
   title: 'Bracket',
@@ -10,5 +9,5 @@ export default {
 };
 
 export const DigitInputKnobs: React.FC = () => {
-  return <Bracket side={Side.left} />;
+  return <Bracket type={BracketType.left} />;
 };

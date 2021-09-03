@@ -27,6 +27,8 @@ const DigitInput: React.FC<DigitInputProps> = ({
     console.log('вперед');
   }
 
+  const refKek = React.useRef(null);
+
   return (
     <input
       style={style}
@@ -36,6 +38,7 @@ const DigitInput: React.FC<DigitInputProps> = ({
       styleName="digit-input"
       onChange={e => onChange && onChange(e.target.value)}
       onKeyUp={handleClick}
+      ref={refKek}
     />
   );
 };

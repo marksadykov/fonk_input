@@ -105,6 +105,10 @@ export default class PhoneInputStore implements ILocalStore {
     return this.currentMask?.prefix || null;
   }
 
+  get currentPrefixLength(): number {
+    return this.currentMask?.prefix.length || 0;
+  }
+
   get formattedPhone(): string | null {
     const valueWithoutPrefix =
       this.value

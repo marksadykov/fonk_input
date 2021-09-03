@@ -30,7 +30,7 @@ const PhoneInput = ({ masks, value = '', onChange }: PhoneInputProps) => {
       />
       <DigitInput
         disable
-        maxLength={2}
+        maxLength={phoneInputStore.currentPrefixLength}
         value={phoneInputStore.currentPrefix || ''}
       />
       {phoneInputStore.inputs?.map((item, index) => {

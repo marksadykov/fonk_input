@@ -16,7 +16,21 @@ export type PhoneMask = {
 
 export type InputItem = {
   value?: BracketType;
-  component: React.FC<BracketProps> | React.FC<DigitInputProps>;
+  component:
+    | React.FC<BracketProps>
+    | React.ForwardRefExoticComponent<
+        Pick<
+          DigitInputProps,
+          | 'value'
+          | 'disable'
+          | 'maxLength'
+          | 'onChange'
+          | 'indexInput'
+          | 'focusBefore'
+          | 'focusAfter'
+        > &
+          React.RefAttributes<HTMLInputElement>
+      >;
 };
 
 const maskItem: Record<string, string> = {

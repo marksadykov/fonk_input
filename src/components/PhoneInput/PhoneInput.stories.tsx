@@ -20,8 +20,15 @@ const masks = [
     key: 'en',
     name: 'England',
     emoji: '‍🌈',
-    prefix: '+9',
+    prefix: '+44',
     mask: '(***) - *** - ** - **',
+  },
+  {
+    key: 'by',
+    name: 'Беларусь',
+    emoji: '🇧🇾',
+    prefix: '+375',
+    mask: '*** - )***) - *(* - **',
   },
 ];
 

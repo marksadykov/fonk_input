@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { observer } from 'mobx-react-lite';
-import PhoneInputStore, { PhoneMask } from '../../store/PhoneInputStore';
-import CountriesDropdown from '../CountriesDropdown';
-import { useLocalStore } from '../../store/useLocal';
-import DigitInput from '../DigitInput';
+import PhoneInputStore, { PhoneMask } from '@store/PhoneInputStore';
+import CountriesDropdown from '@components/CountriesDropdown';
+import { useLocalStore } from '@store/useLocal';
+import DigitInput from '@components/DigitInput';
 
 type PhoneInputProps = {
   masks: PhoneMask[] | null;
@@ -44,6 +44,19 @@ const PhoneInput = ({ masks, value = '', onChange }: PhoneInputProps) => {
     refs[0].current?.focus();
   };
 
+  const pasteAfter = React.useCallback(
+    (indexInput: number, value: string) => {
+      const pasting = value.substring(1);
+      for (let i = 0; i <= pasting.length; i++) {
+        const index = i + indexInput;
+        if (index < phoneInputStore.digitInputStores.length) {
+          phoneInputStore.digitInputStores[index].setValue(value[i]);
+        }
+      }
+    },
+    [phoneInputStore.digitInputStores]
+  );
+
   React.useEffect(() => {
     setLengthRefs(phoneInputStore.digitInputStores.length);
   }, [phoneInputStore.digitInputStores.length]);
@@ -75,10 +88,11 @@ const PhoneInput = ({ masks, value = '', onChange }: PhoneInputProps) => {
         return (
           <Comp
             value={digitInputStore.value}
-            onChange={digitInputStore.setValue}
+            changeCallBack={digitInputStore.setValue}
             indexInput={digitInputStoresCount - 1}
             focusBefore={focusBefore}
             focusAfter={focusAfter}
+            pasteAfter={pasteAfter}
             key={index}
             ref={ref}
           />

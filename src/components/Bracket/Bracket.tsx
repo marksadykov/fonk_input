@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { symbols } from '@utils/symbols';
 import './Bracket.modules.scss';
 
 export enum BracketType {
@@ -14,9 +15,9 @@ export type BracketProps = {
 const Bracket: React.FC<BracketProps> = ({ type }: BracketProps) => {
   return (
     <span styleName="bracket">
-      {type == BracketType.left && '('}
-      {type == BracketType.right && ')'}
-      {type == BracketType.dash && '-'}
+      {type == BracketType.left && symbols.leftBracket}
+      {type == BracketType.right && symbols.rightBracket}
+      {type == BracketType.dash && symbols.dash}
     </span>
   );
 };

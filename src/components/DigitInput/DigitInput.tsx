@@ -1,14 +1,22 @@
 import * as React from 'react';
+import {
+  isDigitKey,
+  isFocusBeforeEvent,
+  isFocusAfterEvent,
+  isBackspace,
+  isDigit,
+} from './events';
 import './DigitInput.modules.scss';
 
 export type DigitInputProps = {
   value?: string;
   disable?: boolean;
   maxLength?: number;
-  onChange?: (value: string) => void;
+  changeCallBack?: (value: string) => void;
   indexInput?: number;
   focusBefore?: (currentIndex: number) => void;
   focusAfter?: (currentIndex: number) => void;
+  pasteAfter?: (indexInput: number, value: string) => void;
 };
 
 // eslint-disable-next-line react/display-name
@@ -18,10 +26,11 @@ const DigitInput = React.forwardRef<HTMLInputElement, DigitInputProps>(
       value,
       disable = false,
       maxLength = 1,
-      onChange,
+      changeCallBack,
       indexInput,
       focusBefore,
       focusAfter,
+      pasteAfter,
     },
     ref
   ) => {
@@ -29,32 +38,40 @@ const DigitInput = React.forwardRef<HTMLInputElement, DigitInputProps>(
       return { width: `${maxLength}ch` };
     }, [maxLength]);
 
-    const handleKeyUp = (e: any) => {
-      e.preventDefault();
-      if (indexInput !== undefined) {
-        if (e.key === 'Backspace' || e.key === 'ArrowLeft') {
-          focusBefore && focusBefore(indexInput);
-          return;
+    const handleKeyUp = React.useCallback(
+      (e: React.KeyboardEvent) => {
+        e.preventDefault();
+        if (indexInput !== undefined) {
+          if (isFocusBeforeEvent(e)) {
+            focusBefore?.(indexInput);
+            isBackspace(e) && changeCallBack?.('');
+            return;
+          }
+          if (isFocusAfterEvent(e)) {
+            isDigitKey(e) && changeCallBack?.(e.key);
+            focusAfter?.(indexInput);
+            return;
+          }
         }
-        if (
-          e.key === 'ArrowRight' ||
-          e.key === '1' ||
-          e.key === '2' ||
-          e.key === '3' ||
-          e.key === '4' ||
-          e.key === '5' ||
-          e.key === '6' ||
-          e.key === '7' ||
-          e.key === '8' ||
-          e.key === '9' ||
-          e.key === '0' ||
-          e.key === 'Tab'
-        ) {
-          focusAfter && focusAfter(indexInput);
-          return;
+      },
+      [indexInput, focusBefore, focusAfter, changeCallBack]
+    );
+
+    const onPasteCallback = React.useCallback(
+      (e: React.ClipboardEvent) => {
+        e.preventDefault();
+        const value = e.clipboardData.getData('text');
+        changeCallBack?.(value);
+        if (indexInput !== undefined) {
+          pasteAfter?.(indexInput, value);
+          if (isDigit(value)) {
+            focusAfter?.(indexInput);
+          }
         }
-      }
-    };
+      },
+      [changeCallBack, focusAfter, indexInput, pasteAfter]
+    );
+
     return (
       <input
         style={style}
@@ -62,8 +79,8 @@ const DigitInput = React.forwardRef<HTMLInputElement, DigitInputProps>(
         disabled={disable}
         value={value}
         styleName="digit-input"
-        onChange={e => onChange && onChange(e.target.value)}
         onKeyUp={handleKeyUp}
+        onPaste={onPasteCallback}
         ref={ref}
       />
     );

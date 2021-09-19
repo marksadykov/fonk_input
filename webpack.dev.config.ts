@@ -6,6 +6,7 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 const autoprefixer = require('autoprefixer');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 import { webpackVariables, PORT } from './webpack.variables';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
@@ -93,6 +94,10 @@ const config: Configuration = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.scss'],
+    plugins: [new TsconfigPathsPlugin()],
+    alias: {
+      styles: path.join(__dirname, 'styles'),
+    },
   },
   optimization: {
     runtimeChunk: 'single',

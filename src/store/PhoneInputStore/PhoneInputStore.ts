@@ -1,10 +1,11 @@
 import { computed, makeObservable, observable } from 'mobx';
 import CountriesDropdownStore from '../CountriesDropdownStore';
 import { ILocalStore } from '../useLocal';
-import DigitInput, { DigitInputProps } from '../../components/DigitInput';
-import Bracket, { BracketProps, BracketType } from '../../components/Bracket';
+import DigitInput, { DigitInputProps } from '@components/DigitInput';
+import Bracket, { BracketProps, BracketType } from '@components/Bracket';
 import * as React from 'react';
 import DigitInputStore from '../DigitInputStore';
+import { symbols } from '@utils/symbols';
 
 export type PhoneMask = {
   key: string;
@@ -24,35 +25,36 @@ export type InputItem = {
           | 'value'
           | 'disable'
           | 'maxLength'
-          | 'onChange'
+          | 'changeCallBack'
           | 'indexInput'
           | 'focusBefore'
           | 'focusAfter'
+          | 'pasteAfter'
         > &
           React.RefAttributes<HTMLInputElement>
       >;
 };
 
 const maskItem: Record<string, string> = {
-  '(': ' (',
-  ')': ')',
-  '-': ' - ',
+  [symbols.leftBracket]: ' (',
+  [symbols.rightBracket]: ')',
+  [symbols.dash]: ' - ',
 };
 
 const inputItem: Record<string, InputItem> = {
-  '(': {
+  [symbols.leftBracket]: {
     value: BracketType.left,
     component: Bracket,
   },
-  ')': {
+  [symbols.rightBracket]: {
     value: BracketType.right,
     component: Bracket,
   },
-  '-': {
+  [symbols.dash]: {
     value: BracketType.dash,
     component: Bracket,
   },
-  '*': {
+  [symbols.star]: {
     component: DigitInput,
   },
 };

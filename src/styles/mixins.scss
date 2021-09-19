@@ -1,0 +1,22 @@
+@import 'variables';
+
+// Сброс border
+@mixin resetBorder {
+  border: none;
+}
+
+// Сброс outline
+@mixin resetOutline {
+  outline: none;
+}
+
+// Размеры поля для ввода
+@mixin inputSize {
+  width: 1ch;
+  font: $font;
+}
+
+@mixin borderActive {
+  color: $active-color;
+  border-bottom: $active-border-bottom;
+}

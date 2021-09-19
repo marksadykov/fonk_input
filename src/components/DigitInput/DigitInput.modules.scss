@@ -1,0 +1,13 @@
+@import '~styles/mixins.scss';
+
+.digit-input {
+  caret-color: transparent;
+  font: $font;
+  @include resetBorder;
+  border-bottom: $border-bottom;
+  
+  &:focus {
+    @include resetOutline;
+    @include borderActive;
+  }
+}

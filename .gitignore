@@ -1,8 +1,7 @@
 .idea/
 node_modules/
-public/
+build/
 *.log
-lerna-debug.log
 packages/**/node_modules
 report.*.json
 .yarnrc

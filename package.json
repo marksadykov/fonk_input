@@ -49,8 +49,6 @@
     "@storybook/addons": "^6.3.7",
     "@storybook/preset-typescript": "^3.0.0",
     "@storybook/react": "^6.3.7",
-    "@tailwindcss/postcss7-compat": "^2.2.8",
-    "@teamsupercell/typings-for-css-modules-loader": "^2.5.1",
     "@types/autoprefixer": "^10.2.0",
     "@types/fork-ts-checker-webpack-plugin": "^0.4.5",
     "@types/mini-css-extract-plugin": "^2.0.1",
@@ -64,7 +62,6 @@
     "autoprefixer": "^9.7.1",
     "babel-loader": "^8.2.2",
     "babel-plugin-react-css-modules": "^5.2.6",
-    "clean-webpack-plugin": "^4.0.0-alpha.0",
     "css-loader": "^3.2.0",
     "eslint": "^7.31.0",
     "eslint-config-prettier": "^8.3.0",
@@ -90,7 +87,6 @@
     "sass": "^1.36.0",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.2.1",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "terser-webpack-plugin": "^5.1.4",
     "ts-loader": "^9.2.4",
     "ts-node": "^10.1.0",
@@ -100,5 +96,8 @@
     "webpack": "^5.47.1",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2"
+  },
+  "exports": {
+    ".": "./src/components/PhoneInput"
   }
 }

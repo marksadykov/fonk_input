@@ -5,7 +5,7 @@ import CountriesDropdown from '@components/CountriesDropdown';
 import { useLocalStore } from '@store/useLocal';
 import DigitInput from '@components/DigitInput';
 
-type PhoneInputProps = {
+export type PhoneInputProps = {
   masks: PhoneMask[] | null;
   value?: string;
   onChange: (value: string) => void;

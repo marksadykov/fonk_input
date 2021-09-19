@@ -5,6 +5,7 @@
   "license": "MIT",
   "author": "Mark Sadykov",
   "main": "index.js",
+  "homepage": "./",
   "jest": {
     "verbose": true
   },
@@ -19,7 +20,8 @@
   },
   "scripts": {
     "start": "webpack serve --config webpack.dev.config.ts",
-    "build": "webpack --config webpack.prod.config.ts",
+    "prepare": "install-self-peers -- --ignore-scripts && yarn build",
+    "build": "webpack --config webpack.dev.config.ts",
     "test": "jest",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
@@ -30,7 +32,9 @@
   },
   "dependencies": {
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "mobx": "^6.3.3",
+    "mobx-react-lite": "^3.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.14.8",
@@ -76,8 +80,6 @@
     "jest": "^27.0.6",
     "lint-staged": "^11.1.1",
     "mini-css-extract-plugin": "^2.1.0",
-    "mobx": "^6.3.3",
-    "mobx-react-lite": "^3.2.1",
     "node-sass": "^6.0.1",
     "postcss-loader": "^3.0.0",
     "postcss-nested": "^4.1.2",
